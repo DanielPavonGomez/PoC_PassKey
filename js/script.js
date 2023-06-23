@@ -1,19 +1,26 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const submitButton = document.getElementById("submitButton");
+document.addEventListener("DOMContentLoaded", function () {
+  const submitButton = document.getElementById("submitRegister");
   submitButton.addEventListener("click", registerCredentials);
 });
 
-function generateCredentialOptions(username) {
-  function generateRandomBase64(length) {
-    const bytes = new Uint8Array(length);
-    window.crypto.getRandomValues(bytes);
-    const base64String = btoa(String.fromCharCode.apply(null, bytes));
-    return base64String;
-  }
+document.addEventListener("DOMContentLoaded", function () {
+  const submitButton = document.getElementById("submitLogin");
+  submitButton.addEventListener("click", loginCredentials);
+});
 
-  const challenge = generateRandomBase64(32);
+function generateRandomBase64(length) {
+  const bytes = new Uint8Array(length);
+  window.crypto.getRandomValues(bytes);
+  const base64String = btoa(String.fromCharCode.apply(null, bytes));
+  return base64String;
+}
+
+function generateCredentialOptions(username) {
+ 
+
+  const challenge = generateRandomBase64(32); //este challenge es el que se envia al servidor y se compara con el que se genera en el servidor
   const rp = {
-    id: "example.com"
+    name: "example.com", //nombre de la pagina web que se esta usando para la autenticacion 
   };
   const user = {
     id: generateRandomBase64(32),
@@ -22,12 +29,12 @@ function generateCredentialOptions(username) {
   };
   const pubKeyCredParams = [
     { alg: -7, type: "public-key" },
-    { alg: -257, type: "public-key" }
+    // { alg: -257, type: "public-key" }
   ];
   const excludeCredentials = [];
   const authenticatorSelection = {
     authenticatorAttachment: "platform",
-    requireResidentKey: true
+    requireResidentKey: true,
   };
 
   const credentialOptions = {
@@ -36,7 +43,7 @@ function generateCredentialOptions(username) {
     user,
     pubKeyCredParams,
     excludeCredentials,
-    authenticatorSelection
+    authenticatorSelection,
   };
 
   return credentialOptions;
@@ -57,7 +64,7 @@ function decodeBase64ToBinary(base64String) {
 async function registerCredentials(event) {
   event.preventDefault();
 
-  const usernameInput = document.getElementById("username");
+  const usernameInput = document.getElementById("usernameRegister");
   const username = usernameInput.value;
 
   const options = generateCredentialOptions(username);
@@ -72,17 +79,36 @@ async function registerCredentials(event) {
   }
 
   options.authenticatorSelection = {
-    authenticatorAttachment: 'platform',
-    requireResidentKey: true
-  }
+    authenticatorAttachment: "platform",
+    requireResidentKey: true,
+  };
 
   const cred = await navigator.credentials.create({
     publicKey: options,
   });
 
-  // Aquí puedes utilizar las opciones generadas para realizar la solicitud a la API de WebAuthn
-  // Por ejemplo, puedes llamar a la función navigator.credentials.create(options) para crear una nueva credencial
+  console.debug(cred);
+}
 
-  console.log(options);
+async function loginCredentials(event) {
+  event.preventDefault();
+  const credential = navigator.credentials.get({
+    publicKey: {
+      challenge: generateRandomBase64(32),
+  
+      rpId: "example.com",
+  
+      allowCredentials: [
+        {
+          type: "public-key",
+  
+          id: generateRandomBase64(32),
+        },
+      ],
+  
+      userVerification: "required",
+    },
+  });
+  console.debug(credential);
 }
 
