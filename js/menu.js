@@ -9,6 +9,7 @@ function mostrarRegistro() {
 function mostrarLogin() {
   var registro = document.querySelector('.register');
   var login = document.querySelector('.login');
+  document.getElementById("register-done").classList.add("d-none");
   
   registro.style.display = 'none';
   login.style.display = 'block';

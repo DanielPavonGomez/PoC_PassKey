@@ -86,7 +86,8 @@ async function registerCredentials(event) {
   const cred = await navigator.credentials.create({
     publicKey: options,
   });
-
+  document.getElementById("register-done").classList.remove("d-none");
+  localStorage.setItem("credId", cred.id);
   console.log(cred);
 }
 
