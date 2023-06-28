@@ -1,5 +1,5 @@
 function decodeBase64ToBinary(base64String) {
-  let result = Uint8Array.from(base64String, (c) => c.charCodeAt(0));
+  let result = Uint8Array.from(atob(base64String), c => c.charCodeAt(0))
   return result;
 }
 

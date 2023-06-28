@@ -37,7 +37,7 @@ async function registerCredentials(event) {
   });
   document.getElementById("register-done").classList.remove("d-none");
   localStorage.setItem("credId", cred.id);
-  console.log(cred);
+  console.log("PublicKeyCredentials Register",cred);
 }
 
 async function loginCredentials(event) {
@@ -45,7 +45,6 @@ async function loginCredentials(event) {
   let credId = localStorage.getItem("credId");
   credId = decodeBase64ToBinary(credId);
   challenge = generateRandomBase64(32);
-  console.debug(challenge);
 
   const credential = await navigator.credentials.get({
     publicKey: {
@@ -53,17 +52,17 @@ async function loginCredentials(event) {
       timeout: 1800000,
       rpId: "localhost",
       userVerification: "required",
-      // allowCredentials: [
-      //   {
-      //     type: "public-key",
-      //     id: credId,
-      //   },
-      // ],
+      allowCredentials: [
+        {
+          type: "public-key",
+          id: credId,
+        },
+      ],
       authenticatorSelection: {
         authenticatorAttachment: "platform",
         requireResidentKey: true,
       },
     },
   });
-  console.debug(credential);
+  console.log("PublicKeyCredentials Login",credential);
 }

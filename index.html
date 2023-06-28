@@ -26,7 +26,7 @@
         </li>
       </ul>
     </nav>
-    <div class="container register" style="margin-top: 50px;">
+    <div class="container register" style="margin-top: 50px">
       <div class="row justify-content-center align-items-center">
         <div class="col-auto bg-light p-5">
           <form>
@@ -47,20 +47,10 @@
         </div>
       </div>
     </div>
-    <div class="container login" style="display: none;margin-top: 50px;">
+    <div class="container login" style="display: none; margin-top: 50px">
       <div class="row justify-content-center align-items-center">
         <div class="col-auto bg-light p-5">
           <form>
-            <div class="mb-3">
-              <label for="username" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                aria-describedby="emailHelp"
-                autocomplete="username webauthn"
-              />
-            </div>
             <button type="submit" class="btn btn-primary" id="submitLogin">
               Login
             </button>
@@ -68,8 +58,19 @@
         </div>
       </div>
     </div>
-    <div id="register-done" class="alert alert-success d-none fixed-bottom" role="alert">
-        Register is successful!
-      </div>
+    <div
+      id="register-done"
+      class="alert alert-success d-none fixed-bottom"
+      role="alert"
+    >
+      Register is successful!
+    </div>
+    <div
+      id="login-done"
+      class="alert alert-primary d-none fixed-bottom"
+      role="alert"
+    >
+      Successfully logged!
+    </div>
   </body>
 </html>
