@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function registerCredentials(event) {
   event.preventDefault();
-
+ 
   const usernameInput = document.getElementById("usernameRegister");
   const username = usernameInput.value;
 
@@ -46,22 +46,23 @@ async function loginCredentials(event) {
   credId = decodeBase64ToBinary(credId);
   challenge = generateRandomBase64(32);
   console.debug(challenge);
+
   const credential = await navigator.credentials.get({
     publicKey: {
       challenge: decodeBase64ToBinary(challenge),
       timeout: 1800000,
       rpId: "localhost",
       userVerification: "required",
-      allowCredentials: [
-        {
-          type: "public-key",
-          id: credId,
-        },
-      ],
-      // authenticatorSelection: {
-      //   authenticatorAttachment: "platform",
-      //   requireResidentKey: true,
-      // },
+      // allowCredentials: [
+      //   {
+      //     type: "public-key",
+      //     id: credId,
+      //   },
+      // ],
+      authenticatorSelection: {
+        authenticatorAttachment: "platform",
+        requireResidentKey: true,
+      },
     },
   });
   console.debug(credential);
