@@ -1,21 +1,27 @@
 function generateCredentialOptions(username) {
-  challenge = generateRandomBase64(32); //este challenge es el que se envia al servidor y se compara con el que se genera en el servidor
+  challenge = generateRandomBytes(1); //Este challenge es generado por el servidor
+
+  // Relying Party:
   const rp = {
     name: "localhost",
-    id: "localhost", //nombre de la pagina web que se esta usando para la autenticacion
+    id: "localhost",
   };
   const user = {
-    id: generateRandomBase64(32),
+    id: generateRandomBytes(1),
     name: username,
     displayName: username,
   };
+
+  // This Relying Party will accept either an ES256 or RS256 credential, but
+  // prefers an ES256 credential.
   const pubKeyCredParams = [
-    { alg: -7, type: "public-key" },
-    { alg: -257, type: "public-key" },
+    { alg: -7, type: "public-key" }, // "ES256" as registered in the IANA COSE Algorithms registry
+    { alg: -257, type: "public-key" }, // Value registered by this specification for "RS256"
   ];
-  const excludeCredentials = [];
+
+  const excludeCredentials = []; // Don’t re-register any authenticator that has one of these credentials
   const authenticatorSelection = {
-    authenticatorAttachment: "platform",
+    authenticatorAttachment: "platform", // "platform" or "cross-platform"
     requireResidentKey: true,
   };
 

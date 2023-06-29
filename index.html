@@ -10,9 +10,11 @@
       crossorigin="anonymous"
     />
     <script src="js/credentials.js"></script>
-    <script src="js/base64ToBinary.js"></script>
+    <script src="js/decode.js"></script>
     <script src="js/main.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/register.js"></script>
     <title>PoC KeyPass</title>
   </head>
   <body>
@@ -51,6 +53,16 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-auto bg-light p-5">
           <form>
+            <div class="mb-3">
+              <label for="username" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                aria-describedby="emailHelp"
+                autocomplete="username webauthn"
+              />
+            </div>
             <button type="submit" class="btn btn-primary" id="submitLogin">
               Login
             </button>
