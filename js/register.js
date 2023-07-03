@@ -24,6 +24,7 @@ async function registerCredentials(event) {
     })
     .then(function (newCredentialInfo) {
       // Register user on server
+      localStorage.setItem("credId", newCredentialInfo.id);
       console.log("NEW CREDENTIAL INFO", newCredentialInfo);
       document.getElementById("register-done").classList.remove("d-none");
       var int8view = new Uint8Array(newCredentialInfo.rawId);
